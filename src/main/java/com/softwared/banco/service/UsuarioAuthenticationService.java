@@ -17,7 +17,7 @@ public class UsuarioAuthenticationService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		System.out.println("entro al load");
+		
 		
 		return cuentaRepository.findByNombreTitular(username).orElseThrow(()-> new UsernameNotFoundException("usuario no vlido"));
 		

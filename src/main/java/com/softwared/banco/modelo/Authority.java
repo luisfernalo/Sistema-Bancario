@@ -4,14 +4,15 @@ import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity(name = "authority")
 public class Authority implements GrantedAuthority {
+
+	private static final long serialVersionUID = 7303227213650721670L;
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
