@@ -1,4 +1,4 @@
- package com.softwared.banco.config;
+package com.softwared.banco.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,19 +28,21 @@ public class WebSecurityConfig {
 		daoProvider.setUserDetailsService(detailsService);
 		return new ProviderManager(daoProvider);
 	}
-	
+
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-		return http.csrf(
-				csrf -> csrf.disable()
-				)
-				.authorizeHttpRequests(authRequets -> 
-						authRequets
-						//.requestMatchers("/auth/**").permitAll()
-						.anyRequest().authenticated()
-						).httpBasic().and()
-				//.formLogin(Customizer.withDefaults())
-				.build();
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		return http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(authRequets -> {
+			authRequets.requestMatchers("/auth/**").permitAll();
+			authRequets.anyRequest().authenticated();
+		}).formLogin(Customizer.withDefaults()).build();
 	}
-	
+	/*
+	 * @Bean public JwtDecoder jwtDecoder() { return
+	 * NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build(); }
+	 * 
+	 * @Bean public JwtEncoder jwtEncoder() { JWK jwk = new
+	 * RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
+	 * JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+	 * return new NimbusJwtEncoder(jwks); }
+	 */
 }

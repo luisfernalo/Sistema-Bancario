@@ -20,7 +20,8 @@ public class CuentaController {
 
 	@PostMapping(path = "/crearCuenta", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Cuenta crearCuenta(@RequestBody Cuenta cuenta) throws SistemaBancarioExcepcion {
-		return cuentaService.createCuenta(cuenta.getNumeroCuenta(),cuenta.getNombreTitular(),cuenta.getPasswordTitular(),cuenta.getSaldoInicial());
+		return cuentaService.createCuenta(cuenta.getNumeroCuenta(), cuenta.getNombreTitular(),
+				cuenta.getPasswordTitular(), cuenta.getSaldoInicial());
 	}
 
 }
