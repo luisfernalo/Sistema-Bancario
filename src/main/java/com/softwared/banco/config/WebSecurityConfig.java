@@ -1,48 +1,47 @@
 package com.softwared.banco.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.softwared.banco.jwt.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity 
 public class WebSecurityConfig {
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+	@Autowired
+	private final JwtAuthenticationFilter jwtAuthenticationFilter;
+	
+	@Autowired
+	private final AuthenticationProvider authenticationProvider;
+	
+	public WebSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationProvider authenticationProvider) {
+		super();
+		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+		this.authenticationProvider = authenticationProvider;
 	}
 
 	@Bean
-	public AuthenticationManager authManager(UserDetailsService detailsService) {
-		DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
-		daoProvider.setUserDetailsService(detailsService);
-		return new ProviderManager(daoProvider);
+	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+		httpSecurity.csrf(csrf-> csrf.disable())
+					.authorizeHttpRequests(auth-> auth.requestMatchers("/api/auth/login").permitAll()
+							.anyRequest().authenticated())
+					.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+					.authenticationProvider(authenticationProvider)
+					.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+		return httpSecurity.build();
 	}
-
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(authRequets -> {
-			authRequets.requestMatchers("/auth/**").permitAll();
-			authRequets.anyRequest().authenticated();
-		}).formLogin(Customizer.withDefaults()).build();
-	}
-	/*
-	 * @Bean public JwtDecoder jwtDecoder() { return
-	 * NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build(); }
-	 * 
-	 * @Bean public JwtEncoder jwtEncoder() { JWK jwk = new
-	 * RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
-	 * JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-	 * return new NimbusJwtEncoder(jwks); }
-	 */
+	
+	
+	
+	
 }
