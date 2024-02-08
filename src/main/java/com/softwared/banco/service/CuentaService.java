@@ -1,28 +1,27 @@
 package com.softwared.banco.service;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import com.softwared.banco.jwt.TokenService;
+import com.softwared.banco.jwt.AuthResponse;
+import com.softwared.banco.jwt.JwtService;
 import com.softwared.banco.modelo.Authority;
 import com.softwared.banco.modelo.Cuenta;
-import com.softwared.banco.modelo.LoginResponse;
+import com.softwared.banco.modelo.LoginRequest;
+import com.softwared.banco.modelo.RegisterRequest;
 import com.softwared.banco.repository.AuthorityRepository;
 import com.softwared.banco.repository.CuentaRepository;
 import com.softwared.banco.util.enums.AuthorityName;
 import com.softwared.banco.util.excepciones.SistemaBancarioExcepcion;
 import com.softwared.banco.util.excepciones.SistemaBancarioExcepcionDetails;
 
-@Component
+@Service
 public class CuentaService {
 	@Autowired
 	private CuentaRepository cuentaRepository;
@@ -37,27 +36,29 @@ public class CuentaService {
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private TokenService tokenService;
+	JwtService jwtService;
 
-	public Cuenta createCuenta(Long numeroCuenta, String nombreTitular, String passwordTitular, BigDecimal saldoInicial)
-			throws SistemaBancarioExcepcion {
+	public AuthResponse createCuenta(RegisterRequest request) throws SistemaBancarioExcepcion {
 
-		if (numeroCuenta.toString().length() <= 4) {
-			throw new SistemaBancarioExcepcion("numero de cuenta corto",
-					new SistemaBancarioExcepcionDetails("Numero de cuenta debe ser mayor de 4 digitos", "error"));
-		}
-		validarNumeroCuenta(numeroCuenta);
+		validarNumeroCuenta(request.getNumeroCuenta());
 
 		Authority roleuser = authorityRepository.findByName(AuthorityName.USER.toString()).get();
 		Set<Authority> rol = new HashSet<>();
 		rol.add(roleuser);
 
-		return cuentaRepository.save(
-				new Cuenta(numeroCuenta, nombreTitular, passwordEncoder.encode(passwordTitular), saldoInicial, rol));
+		Cuenta cuenta = cuentaRepository.save(new Cuenta(request.getNumeroCuenta(), request.getUsername(),
+				passwordEncoder.encode(request.getPassword()), request.getInitialBalance(), rol));
 
+		var jwtToken = jwtService.generateToken(cuenta);
+
+		return AuthResponse.builder().token(jwtToken).build();
 	}
 
 	public void validarNumeroCuenta(Long numeroCuenta) throws SistemaBancarioExcepcion {
+		if (numeroCuenta.toString().length() <= 4) {
+			throw new SistemaBancarioExcepcion("numero de cuenta corto",
+					new SistemaBancarioExcepcionDetails("Numero de cuenta debe ser mayor de 4 digitos", "error"));
+		}
 		Cuenta cuenta = cuentaRepository.findByNumeroCuenta(numeroCuenta);
 		if (cuenta != null) {
 			throw new SistemaBancarioExcepcion("numero de cuenta ya existe",
@@ -65,20 +66,13 @@ public class CuentaService {
 		}
 	}
 
-	public LoginResponse loginResponse(String username, String password) {
-		try {
+	public AuthResponse loginUser(LoginRequest request) {
 
-			Authentication auth = authenticationManager
-					.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+		authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+		var cuenta = cuentaRepository.findByNombreTitular(request.getUsername()).orElseThrow();
+		var jwtToken = jwtService.generateToken(cuenta);
 
-			String token = tokenService.generateJwt(auth);
-
-			return new LoginResponse(cuentaRepository.findByNombreTitular(username).get(), token);
-
-		} catch (AuthenticationException e) {
-
-			return new LoginResponse(null, " ");
-		}
+		return AuthResponse.builder().token(jwtToken).build();
 	}
-
 }
