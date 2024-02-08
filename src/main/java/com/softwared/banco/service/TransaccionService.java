@@ -58,7 +58,7 @@ public class TransaccionService {
 					new SistemaBancarioExcepcionDetails(localeResolverConfig.messageSource().getMessage(
 							"minimum.deposit", null, Locale.getDefault()), "error"));
 		}
-		cuentaRepository.addFounds(cuenta.getIdCuenta(), valor);
+		cuentaRepository.addFounds(cuenta.getIdAccount(), valor);
 
 		return agregarTransaccion(numeroCuenta, valor);
 	}
@@ -81,7 +81,7 @@ public class TransaccionService {
 		Cuenta cuentaSeleccionada = getCuenta(numeroCuenta);
 		validarSaldo(cuentaSeleccionada, valor);
 		BigDecimal nuevoSaldo = cuentaSeleccionada.getSaldoInicial().subtract(valor);
-		cuentaRepository.removeFounds(cuentaSeleccionada.getIdCuenta(), nuevoSaldo);
+		cuentaRepository.removeFounds(cuentaSeleccionada.getIdAccount(), nuevoSaldo);
 
 		return transaccionRepository.save(new Transaccion(numeroCuenta, valor, TipoTransacion.RETIRO,
 				LocalDateTime.now(), EstadoTransacion.APROBADO));

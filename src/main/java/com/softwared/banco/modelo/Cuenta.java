@@ -22,19 +22,17 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "cuenta")
 public class Cuenta implements UserDetails {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -1963678291864906103L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cuenta")
-	private Integer idCuenta;
+	private Integer idAccount;
 
 	@Column
-	private Long numeroCuenta;
-	private String nombreTitular;
+	private Long numberAccount;
+	private String userName;
 	private String passwordTitular;
 	private BigDecimal saldoInicial;
 
@@ -50,8 +48,8 @@ public class Cuenta implements UserDetails {
 
 	public Cuenta(Long numeroCuenta, String nombreTitular, String passwordTitular, BigDecimal saldoInicial) {
 		super();
-		this.numeroCuenta = numeroCuenta;
-		this.nombreTitular = nombreTitular;
+		this.numberAccount = numeroCuenta;
+		this.userName = nombreTitular;
 		this.passwordTitular = passwordTitular;
 		this.saldoInicial = saldoInicial;
 	}
@@ -59,8 +57,8 @@ public class Cuenta implements UserDetails {
 	public Cuenta(Long numeroCuenta, String nombreTitular, String passwordTitular, BigDecimal saldoInicial,
 			Set<Authority> authorities) {
 		super();
-		this.numeroCuenta = numeroCuenta;
-		this.nombreTitular = nombreTitular;
+		this.numberAccount = numeroCuenta;
+		this.userName = nombreTitular;
 		this.passwordTitular = passwordTitular;
 		this.saldoInicial = saldoInicial;
 		this.authorities = authorities;
@@ -68,7 +66,7 @@ public class Cuenta implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return this.nombreTitular;
+		return this.userName;
 	}
 
 	@Override
@@ -79,7 +77,7 @@ public class Cuenta implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// posibles errores que salgan
-		return this.authorities;
+		return authorities;
 	}
 
 	@Override
@@ -106,28 +104,28 @@ public class Cuenta implements UserDetails {
 		return true;
 	}
 
-	public Integer getIdCuenta() {
-		return idCuenta;
+	public Integer getIdAccount() {
+		return idAccount;
 	}
 
-	public void setIdCuenta(Integer idCuenta) {
-		this.idCuenta = idCuenta;
+	public void setIdAccount(Integer idCuenta) {
+		this.idAccount = idCuenta;
 	}
 
 	public Long getNumeroCuenta() {
-		return numeroCuenta;
+		return numberAccount;
 	}
 
 	public void setNumeroCuenta(Long numeroCuenta) {
-		this.numeroCuenta = numeroCuenta;
+		this.numberAccount = numeroCuenta;
 	}
 
 	public String getNombreTitular() {
-		return nombreTitular;
+		return userName;
 	}
 
 	public void setNombreTitular(String nombreTitular) {
-		this.nombreTitular = nombreTitular;
+		this.userName = nombreTitular;
 	}
 
 	public String getPasswordTitular() {
