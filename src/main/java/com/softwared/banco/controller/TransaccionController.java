@@ -2,13 +2,10 @@ package com.softwared.banco.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,28 +22,27 @@ public class TransaccionController {
 	private TransaccionService transaccionService;
 
 	@PutMapping("/depositoDinero")
-	public Object depositoDinero(@RequestBody Map<String, String> data) throws SistemaBancarioExcepcion {
-		Long numeroCuenta = Long.parseLong(data.get("numeroCuenta"));
-		BigDecimal valor = new BigDecimal(data.get("valor"));
-		return transaccionService.depositoTransaccion(numeroCuenta, valor);
+	public Object depositoDinero(@RequestParam Long numberAccound, @RequestParam BigDecimal depositValue)
+			throws SistemaBancarioExcepcion {
+		return transaccionService.depositoTransaccion(numberAccound, depositValue);
 	}
 
 	@PutMapping("/retiroDinero")
-	public Transaccion retiroDinero(@RequestParam Long numeroCuenta, @RequestParam BigDecimal valor)
-			throws SistemaBancarioExcepcion, NotFoundException {
+	public Transaccion retiroDinero(@RequestParam Long numberAccound, @RequestParam BigDecimal withdrawalValue)
+			throws SistemaBancarioExcepcion {
 
-		return transaccionService.retiroDinero(numeroCuenta, valor);
+		return transaccionService.retiroDinero(numberAccound, withdrawalValue);
 	}
 
 	@GetMapping("/obtenerSaldo")
-	public BigDecimal obtenerSaldo(@RequestParam Long numeroCuenta) throws Exception {
+	public BigDecimal obtenerSaldo(@RequestParam Long numberAccound) throws Exception {
 
-		return transaccionService.saldoCuenta(numeroCuenta);
+		return transaccionService.saldoCuenta(numberAccound);
 	}
 
 	@GetMapping("/obtenerHistorial")
-	public List<Transaccion> obtenerHistorialTransacciones(@RequestParam Long numeroCuenta)
+	public List<Transaccion> obtenerHistorialTransacciones(@RequestParam Long numberAccound)
 			throws SistemaBancarioExcepcion {
-		return transaccionService.obtenerHistorialTransacciones(numeroCuenta);
+		return transaccionService.obtenerHistorialTransacciones(numberAccound);
 	}
 }

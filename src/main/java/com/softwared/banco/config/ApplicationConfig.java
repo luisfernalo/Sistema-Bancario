@@ -18,9 +18,9 @@ public class ApplicationConfig {
 
 	private final CuentaRepository cuentaRepository;
 
-	@Bean
-	public UserDetailsService userDetailsService() {
-		return username -> cuentaRepository.findByNombreTitular(username)
+    @Bean
+    UserDetailsService userDetailsService() {
+		return username -> cuentaRepository.findByHolderEmail(username)
 				.orElseThrow(() -> new UsernameNotFoundException("usuario no encontrado"));
 	}
 
@@ -47,4 +47,5 @@ public class ApplicationConfig {
 		this.cuentaRepository = cuentaRepository;
 	}
 
+	
 }

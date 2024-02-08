@@ -37,7 +37,7 @@ public class TransaccionService {
 	// Metodo para obtener Cuenta por el numero de cuenta
 	public Cuenta getCuenta(Long numeroCuenta) throws SistemaBancarioExcepcion {
 
-		Optional<Cuenta> Cuenta = Optional.ofNullable(cuentaRepository.findByNumeroCuenta(numeroCuenta));
+		Optional<Cuenta> Cuenta = Optional.ofNullable(cuentaRepository.findByNumberAccount(numeroCuenta));
 		Cuenta.orElseThrow(
 				() -> new SistemaBancarioExcepcion(
 						localeResolverConfig.messageSource().getMessage("not.found.cuenta", null, Locale.getDefault()),
@@ -51,8 +51,8 @@ public class TransaccionService {
 	// Metodo para deposito de dinero
 	public Object depositoTransaccion(Long numeroCuenta, BigDecimal valor) throws SistemaBancarioExcepcion {
 		Cuenta cuenta = getCuenta(numeroCuenta);
-		Parametro parametros = tipoParametroRepository.findByClave(ClaveParametro.VALOR_MIN_TR.getClaveParametro());
-		if (valor.compareTo(new BigDecimal(parametros.getValor())) < 0) {
+		Parametro parametros = tipoParametroRepository.findBykeyParameter(ClaveParametro.VALOR_MIN_TR.getClaveParametro());
+		if (valor.compareTo(new BigDecimal(parametros.getValueParameter())) < 0) {
 			throw new SistemaBancarioExcepcion(
 					localeResolverConfig.messageSource().getMessage("low.deposit", null, Locale.getDefault()),
 					new SistemaBancarioExcepcionDetails(localeResolverConfig.messageSource().getMessage(
@@ -72,7 +72,7 @@ public class TransaccionService {
 	// Metodo de obtener el saldo de la cuenta.
 	public BigDecimal saldoCuenta(Long numeroCuenta) throws SistemaBancarioExcepcion {
 		Cuenta cuentaSeleccionada = getCuenta(numeroCuenta);
-		return cuentaSeleccionada.getSaldoInicial();
+		return cuentaSeleccionada.getInitialBalance();
 	}
 
 	// Metodo Retiro de dinero
@@ -80,7 +80,7 @@ public class TransaccionService {
 
 		Cuenta cuentaSeleccionada = getCuenta(numeroCuenta);
 		validarSaldo(cuentaSeleccionada, valor);
-		BigDecimal nuevoSaldo = cuentaSeleccionada.getSaldoInicial().subtract(valor);
+		BigDecimal nuevoSaldo = cuentaSeleccionada.getInitialBalance().subtract(valor);
 		cuentaRepository.removeFounds(cuentaSeleccionada.getIdAccount(), nuevoSaldo);
 
 		return transaccionRepository.save(new Transaccion(numeroCuenta, valor, TipoTransacion.RETIRO,
@@ -89,8 +89,8 @@ public class TransaccionService {
 
 	public void validarSaldo(Cuenta cuentaSelecionada, BigDecimal valor) throws SistemaBancarioExcepcion {
 
-		if (cuentaSelecionada.getSaldoInicial().compareTo(valor) < 0) {
-			transaccionRepository.save(new Transaccion(cuentaSelecionada.getNumeroCuenta(), valor,
+		if (cuentaSelecionada.getInitialBalance().compareTo(valor) < 0) {
+			transaccionRepository.save(new Transaccion(cuentaSelecionada.getNumberAccount(), valor,
 					TipoTransacion.RETIRO, LocalDateTime.now(), EstadoTransacion.RECHAZADO));
 			throw new SistemaBancarioExcepcion(
 					localeResolverConfig.messageSource().getMessage("error.subtract", null, Locale.getDefault()),
@@ -104,7 +104,7 @@ public class TransaccionService {
 
 	public List<Transaccion> obtenerHistorialTransacciones(Long numeroCuenta) throws SistemaBancarioExcepcion {
 		getCuenta(numeroCuenta);
-		List<Transaccion> cuentaSelecionada = transaccionRepository.findByNumeroCuenta(numeroCuenta);
+		List<Transaccion> cuentaSelecionada = transaccionRepository.findByNumberAccount(numeroCuenta);
 
 		if (cuentaSelecionada.isEmpty()) {
 			throw new SistemaBancarioExcepcion(

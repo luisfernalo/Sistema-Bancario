@@ -18,9 +18,9 @@ public class TipoParametroController {
 	private TipoParametroRepository tipoParametroRepository;
 
 	@PutMapping("/parametro")
-	public Parametro crearParametro(@RequestParam String clave, @RequestParam String valor) {
+	public Parametro crearParametro(@RequestParam String keyParameter, @RequestParam String valueParameter) {
 
-		return tipoParametroRepository.save(new Parametro(clave, TipoParametro.STRING, valor));
+		return tipoParametroRepository.save(new Parametro(keyParameter, TipoParametro.STRING, valueParameter));
 	}
 
 }

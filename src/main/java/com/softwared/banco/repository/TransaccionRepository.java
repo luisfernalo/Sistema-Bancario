@@ -10,6 +10,6 @@ import com.softwared.banco.modelo.Transaccion;
 @Repository
 public interface TransaccionRepository extends JpaRepository<Transaccion, Integer> {
 
-	List<Transaccion> findByNumeroCuenta(Long numeroCuenta);
+	List<Transaccion> findByNumberAccount(Long numeroCuenta);
 
 }

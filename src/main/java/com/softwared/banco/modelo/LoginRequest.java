@@ -52,7 +52,7 @@ public class LoginRequest {
 		}
 
 		public LoginRequest build() {
-			// Validation can be added here
+			
 			if (username == null || username.isEmpty()) {
 				throw new IllegalArgumentException("Username cannot be null or empty");
 			}

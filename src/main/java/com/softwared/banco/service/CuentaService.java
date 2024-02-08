@@ -40,14 +40,14 @@ public class CuentaService {
 
 	public AuthResponse createCuenta(RegisterRequest request) throws SistemaBancarioExcepcion {
 
-		validarNumeroCuenta(request.getNumeroCuenta());
+		validarNumeroCuenta(request.getNumberAccount());
 
 		Authority roleuser = authorityRepository.findByName(AuthorityName.USER.toString()).get();
 		Set<Authority> rol = new HashSet<>();
 		rol.add(roleuser);
 
-		Cuenta cuenta = cuentaRepository.save(new Cuenta(request.getNumeroCuenta(), request.getUsername(),
-				passwordEncoder.encode(request.getPassword()), request.getInitialBalance(), rol));
+		Cuenta cuenta = cuentaRepository.save(new Cuenta(request.getNumberAccount(), request.getHolderName(),request.getHolderEmail(),
+				passwordEncoder.encode(request.getHolderpassword()), request.getInitialBalance(), rol));
 
 		var jwtToken = jwtService.generateToken(cuenta);
 
@@ -59,7 +59,7 @@ public class CuentaService {
 			throw new SistemaBancarioExcepcion("numero de cuenta corto",
 					new SistemaBancarioExcepcionDetails("Numero de cuenta debe ser mayor de 4 digitos", "error"));
 		}
-		Cuenta cuenta = cuentaRepository.findByNumeroCuenta(numeroCuenta);
+		Cuenta cuenta = cuentaRepository.findByNumberAccount(numeroCuenta);
 		if (cuenta != null) {
 			throw new SistemaBancarioExcepcion("numero de cuenta ya existe",
 					new SistemaBancarioExcepcionDetails("Numero de cuenta no se puede usar", "error"));
@@ -70,7 +70,7 @@ public class CuentaService {
 
 		authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-		var cuenta = cuentaRepository.findByNombreTitular(request.getUsername()).orElseThrow();
+		var cuenta = cuentaRepository.findByHolderEmail(request.getUsername()).orElseThrow();
 		var jwtToken = jwtService.generateToken(cuenta);
 
 		return AuthResponse.builder().token(jwtToken).build();

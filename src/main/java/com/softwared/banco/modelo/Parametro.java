@@ -21,15 +21,15 @@ public class Parametro {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idParametro;
+	private Integer idParameter;
 	
 	@Column
-	private String clave;
+	private String keyParameter;
 	@Column
 	@Enumerated(EnumType.STRING)
-	private TipoParametro tipoParametro;
+	private TipoParametro typeParameter;
 	@Column
-	private String valor;
+	private String valueParameter;
 
 	
 	
@@ -38,43 +38,67 @@ public class Parametro {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Parametro(String clave, TipoParametro tipoParametro, String valor) {
+	public Parametro(String keyParameter, TipoParametro typeParameter, String valueParameter) {
 		super();
-		this.clave = clave;
-		this.tipoParametro = tipoParametro;
-		this.valor = valor;
+		this.keyParameter = keyParameter;
+		this.typeParameter = typeParameter;
+		this.valueParameter = valueParameter;
+	}
+
+	public Integer getIdParameter() {
+		return idParameter;
+	}
+
+	public void setIdParameter(Integer idParameter) {
+		this.idParameter = idParameter;
+	}
+
+	public String getKeyParameter() {
+		return keyParameter;
+	}
+
+	public void setKeyParameter(String keyParameter) {
+		this.keyParameter = keyParameter;
+	}
+
+	public TipoParametro getTypeParameter() {
+		return typeParameter;
+	}
+
+	public void setTypeParameter(TipoParametro typeParameter) {
+		this.typeParameter = typeParameter;
 	}
 
 	public Integer getIdParametro() {
-		return idParametro;
+		return idParameter;
 	}
 
 	public void setIdParametro(Integer idParametro) {
-		this.idParametro = idParametro;
+		this.idParameter = idParametro;
 	}
 
 	public String getClave() {
-		return clave;
+		return keyParameter;
 	}
 
 	public void setClave(String clave) {
-		this.clave = clave;
+		this.keyParameter = clave;
 	}
 
 	public TipoParametro getTipoParametro() {
-		return tipoParametro;
+		return typeParameter;
 	}
 
 	public void setTipoParametro(TipoParametro tipoParametro) {
-		this.tipoParametro = tipoParametro;
+		this.typeParameter = tipoParametro;
 	}
 
-	public String getValor() {
-		return valor;
+	public String getValueParameter() {
+		return valueParameter;
 	}
 
-	public void setValor(String valor) {
-		this.valor = valor;
+	public void setValueParameter(String valor) {
+		this.valueParameter = valor;
 	}
 
 }

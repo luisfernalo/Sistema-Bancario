@@ -13,13 +13,11 @@ public class Authority implements GrantedAuthority {
 
 	private static final long serialVersionUID = 7303227213650721670L;
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_authority")
 	private Long idAuthority;
 
-	
 	private String name;
 
 	public Authority() {
@@ -37,7 +35,6 @@ public class Authority implements GrantedAuthority {
 
 	@Override
 	public String getAuthority() {
-		//cambios
 		return this.name;
 	}
 

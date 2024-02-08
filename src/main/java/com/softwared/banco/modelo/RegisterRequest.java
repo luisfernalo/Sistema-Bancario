@@ -4,33 +4,42 @@ import java.math.BigDecimal;
 
 public class RegisterRequest {
 
-	private Long numeroCuenta;
-	private String username;
-	private String password;
+	private Long numberAccount;
+	private String holderName;
+	private String holderEmail;
+	private String holderpassword;
 	private BigDecimal initialBalance;
 
-	public Long getNumeroCuenta() {
-		return numeroCuenta;
+	public Long getNumberAccount() {
+		return numberAccount;
 	}
 
-	public void setNumeroCuenta(Long numeroCuenta) {
-		this.numeroCuenta = numeroCuenta;
+	public void setNumberAccount(Long numberAccount) {
+		this.numberAccount = numberAccount;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getHolderEmail() {
+		return holderEmail;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setHolderEmail(String holderEmail) {
+		this.holderEmail = holderEmail;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getHolderName() {
+		return holderName;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setHolderName(String holderName) {
+		this.holderName = holderName;
+	}
+
+	public String getHolderpassword() {
+		return holderpassword;
+	}
+
+	public void setHolderpassword(String holderpassword) {
+		this.holderpassword = holderpassword;
 	}
 
 	public BigDecimal getInitialBalance() {
@@ -41,11 +50,13 @@ public class RegisterRequest {
 		this.initialBalance = initialBalance;
 	}
 
-	public RegisterRequest(Long numeroCuenta, String username, String password, BigDecimal initialBalance) {
+	public RegisterRequest(Long numberAccount, String holderName, String holderEmail, String holderpassword,
+			BigDecimal initialBalance) {
 		super();
-		this.numeroCuenta = numeroCuenta;
-		this.username = username;
-		this.password = password;
+		this.numberAccount = numberAccount;
+		this.holderEmail = holderEmail;
+		this.holderName = holderName;
+		this.holderpassword = holderpassword;
 		this.initialBalance = initialBalance;
 	}
 
@@ -55,23 +66,29 @@ public class RegisterRequest {
 
 	public static class Builder {
 
-		private Long numeroCuenta;
-		private String username;
-		private String password;
+		private Long numberAccount;
+		private String holderName;
+		private String holderpassword;
+		private String holderEmail;
 		private BigDecimal initialBalance;
 
-		public Builder withNumeroCuenta(Long numeroCuenta) {
-			this.numeroCuenta = numeroCuenta;
+		public Builder withNumeroCuenta(Long numberAccount) {
+			this.numberAccount = numberAccount;
 			return this;
 		}
 
-		public Builder withUsername(String username) {
-			this.username = username;
+		public Builder withHolderName(String holderName) {
+			this.holderName = holderName;
 			return this;
 		}
 
-		public Builder withPassword(String password) {
-			this.password = password;
+		public Builder withHolderEmail(String holderEmail) {
+			this.holderEmail = holderEmail;
+			return this;
+		}
+
+		public Builder withHolderpassword(String holderpassword) {
+			this.holderpassword = holderpassword;
 			return this;
 		}
 
@@ -81,7 +98,7 @@ public class RegisterRequest {
 		}
 
 		public RegisterRequest build() {
-			return new RegisterRequest(numeroCuenta, username, password, initialBalance);
+			return new RegisterRequest(numberAccount, holderName, holderEmail, holderpassword, initialBalance);
 		}
 	}
 }
