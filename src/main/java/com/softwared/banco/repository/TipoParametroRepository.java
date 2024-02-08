@@ -6,7 +6,7 @@ import com.softwared.banco.modelo.Parametro;
 
 public interface TipoParametroRepository extends JpaRepository<Parametro, Integer> {
 
-	Parametro findByClave(String clave);
+	Parametro findBykeyParameter(String clave);
 	
-	Parametro findByValor(String valor);
+	Parametro findByValueParameter(String valor);
 }

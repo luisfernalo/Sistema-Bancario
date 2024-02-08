@@ -14,18 +14,18 @@ import com.softwared.banco.modelo.Cuenta;
 
 public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
 
-	Cuenta findByNumeroCuenta(Long numeroCuenta);
+	Cuenta findByNumberAccount(Long numeroCuenta);
 	
-    Optional<Cuenta> findByNombreTitular(String nombreTitular);
+    Optional<Cuenta> findByHolderEmail(String holderEmail);
 
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE CUENTA SET SALDO_INICIAL=SALDO_INICIAL+:valorDeposito where ID_CUENTA=:IdCuenta", nativeQuery = true)
+	@Query(value = "UPDATE CUENTA SET initial_balance=initial_balance+:valorDeposito where ID_CUENTA=:IdCuenta", nativeQuery = true)
 	void addFounds(@Param("IdCuenta") Integer idCuenta, @Param("valorDeposito") BigDecimal valorDeposito);
 
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE CUENTA SET SALDO_INICIAL=:valorRetiro where ID_CUENTA=:IdCuenta", nativeQuery = true)
+	@Query(value = "UPDATE CUENTA SET initial_balance=:valorRetiro where ID_CUENTA=:IdCuenta", nativeQuery = true)
 	void removeFounds(@Param("IdCuenta") Integer idCuenta, @Param("valorRetiro") BigDecimal valorRetiro);
 
 }

@@ -22,82 +22,82 @@ import jakarta.persistence.Table;
 public class Transaccion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idTransaccion;
+	private Integer idTransaction;
 
 	@Column
-	private Long numeroCuenta;
+	private Long numberAccount;
 
 	@Column
 	@Enumerated(EnumType.STRING)
-	private TipoTransacion tipoTransacion;
+	private TipoTransacion typeTransaction;
 	@Column
-	private BigDecimal valor;
-	private LocalDateTime fecha;
+	private BigDecimal valueTransaction;
+	private LocalDateTime dateTransaction;
 	@Column
 	@Enumerated(EnumType.STRING)
-	private EstadoTransacion estadoTransacion;
+	private EstadoTransacion stateTransaction;
 
 	public Transaccion() {
 		super();
 	}
 
-	public Transaccion(Long numeroCuenta, BigDecimal valor, TipoTransacion tipoTransacion, LocalDateTime localDateTime,
-			EstadoTransacion estadoTransacion) {
+	public Transaccion(Long numberAccount, BigDecimal valueTransaction, TipoTransacion typeTransaction, LocalDateTime localDateTime,
+			EstadoTransacion stateTransaction) {
 		super();
 
-		this.numeroCuenta = numeroCuenta;
-		this.tipoTransacion = tipoTransacion;
-		this.valor = valor;
-		this.fecha = localDateTime;
-		this.estadoTransacion = estadoTransacion;
+		this.numberAccount = numberAccount;
+		this.typeTransaction = typeTransaction;
+		this.valueTransaction = valueTransaction;
+		this.dateTransaction = localDateTime;
+		this.stateTransaction = stateTransaction;
 	}
 
-	public Integer getIdTransaccion() {
-		return idTransaccion;
+	public Integer getIdTransaction() {
+		return idTransaction;
 	}
 
-	public void setIdTransaccion(Integer idTransaccion) {
-		this.idTransaccion = idTransaccion;
+	public void setIdTransaction(Integer idTransaction) {
+		this.idTransaction = idTransaction;
 	}
 
-	public long getNumeroCuenta() {
-		return numeroCuenta;
+	public Long getNumberAccount() {
+		return numberAccount;
 	}
 
-	public void setNumeroCuenta(Long numeroCuenta) {
-		this.numeroCuenta = numeroCuenta;
+	public void setNumberAccount(Long numberAccount) {
+		this.numberAccount = numberAccount;
 	}
 
-	public LocalDateTime getFecha() {
-		return fecha;
+	public TipoTransacion getTypeTransaction() {
+		return typeTransaction;
 	}
 
-	public void setFecha(LocalDateTime fecha) {
-		this.fecha = fecha;
+	public void setTypeTransaction(TipoTransacion typeTransaction) {
+		this.typeTransaction = typeTransaction;
 	}
 
-	public TipoTransacion getTipoTransacion() {
-		return tipoTransacion;
+	public BigDecimal getValueTransaction() {
+		return valueTransaction;
 	}
 
-	public void setTipoTransacion(TipoTransacion tipoTransacion) {
-		this.tipoTransacion = tipoTransacion;
+	public void setValueTransaction(BigDecimal valueTransaction) {
+		this.valueTransaction = valueTransaction;
 	}
 
-	public BigDecimal getValor() {
-		return valor;
+	public LocalDateTime getDateTransaction() {
+		return dateTransaction;
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
+	public void setDateTransaction(LocalDateTime dateTransaction) {
+		this.dateTransaction = dateTransaction;
 	}
 
-	public EstadoTransacion getEstadoTransacion() {
-		return estadoTransacion;
+	public EstadoTransacion getStateTransaction() {
+		return stateTransaction;
 	}
 
-	public void setEstadoTransacion(EstadoTransacion estadoTransacion) {
-		this.estadoTransacion = estadoTransacion;
+	public void setStateTransaction(EstadoTransacion stateTransaction) {
+		this.stateTransaction = stateTransaction;
 	}
 
 }

@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "cuenta")
 public class Cuenta implements UserDetails {
-	
+
 	private static final long serialVersionUID = -1963678291864906103L;
 
 	@Id
@@ -32,12 +32,13 @@ public class Cuenta implements UserDetails {
 
 	@Column
 	private Long numberAccount;
-	private String userName;
-	private String passwordTitular;
-	private BigDecimal saldoInicial;
+	private String holderName;
+	private String holderEmail;
+	private String holderpassword;
+	private BigDecimal initialBalance;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_Authority", joinColumns = { @JoinColumn(name = "id_cuenta") }, inverseJoinColumns = {
+	@JoinTable(name = "user_Authority", joinColumns = { @JoinColumn(name = "id_account") }, inverseJoinColumns = {
 			@JoinColumn(name = " id_authority") })
 	private Set<Authority> authorities;
 
@@ -46,32 +47,35 @@ public class Cuenta implements UserDetails {
 		this.authorities = new HashSet<Authority>();
 	}
 
-	public Cuenta(Long numeroCuenta, String nombreTitular, String passwordTitular, BigDecimal saldoInicial) {
+	public Cuenta(Long numberAccount, String holderName, String holderEmail, String holderpassword,
+			BigDecimal initialBalance) {
 		super();
-		this.numberAccount = numeroCuenta;
-		this.userName = nombreTitular;
-		this.passwordTitular = passwordTitular;
-		this.saldoInicial = saldoInicial;
+		this.numberAccount = numberAccount;
+		this.holderName = holderName;
+		this.holderEmail = holderEmail;
+		this.holderpassword = holderpassword;
+		this.initialBalance = initialBalance;
 	}
 
-	public Cuenta(Long numeroCuenta, String nombreTitular, String passwordTitular, BigDecimal saldoInicial,
-			Set<Authority> authorities) {
+	public Cuenta(Long numberAccount, String holderName, String holderEmail, String holderpassword,
+			BigDecimal initialBalance, Set<Authority> authorities) {
 		super();
-		this.numberAccount = numeroCuenta;
-		this.userName = nombreTitular;
-		this.passwordTitular = passwordTitular;
-		this.saldoInicial = saldoInicial;
+		this.numberAccount = numberAccount;
+		this.holderName = holderName;
+		this.holderEmail = holderEmail;
+		this.holderpassword = holderpassword;
+		this.initialBalance = initialBalance;
 		this.authorities = authorities;
 	}
 
 	@Override
 	public String getUsername() {
-		return this.userName;
+		return this.holderEmail;
 	}
 
 	@Override
 	public String getPassword() {
-		return this.passwordTitular;
+		return this.holderpassword;
 	}
 
 	@Override
@@ -108,40 +112,48 @@ public class Cuenta implements UserDetails {
 		return idAccount;
 	}
 
-	public void setIdAccount(Integer idCuenta) {
-		this.idAccount = idCuenta;
+	public void setIdAccount(Integer idAccount) {
+		this.idAccount = idAccount;
 	}
 
-	public Long getNumeroCuenta() {
+	public Long getNumberAccount() {
 		return numberAccount;
 	}
 
-	public void setNumeroCuenta(Long numeroCuenta) {
-		this.numberAccount = numeroCuenta;
+	public void setNumberAccount(Long numberAccount) {
+		this.numberAccount = numberAccount;
 	}
 
-	public String getNombreTitular() {
-		return userName;
+	public String getHolderName() {
+		return holderName;
 	}
 
-	public void setNombreTitular(String nombreTitular) {
-		this.userName = nombreTitular;
+	public void setHolderName(String holderName) {
+		this.holderName = holderName;
 	}
 
-	public String getPasswordTitular() {
-		return passwordTitular;
+	public String getHolderEmail() {
+		return holderEmail;
 	}
 
-	public void setPasswordTitular(String passwordTitular) {
-		this.passwordTitular = passwordTitular;
+	public void setHolderEmail(String holderEmail) {
+		this.holderEmail = holderEmail;
 	}
 
-	public BigDecimal getSaldoInicial() {
-		return saldoInicial;
+	public String getHolderpassword() {
+		return holderpassword;
 	}
 
-	public void setSaldoInicial(BigDecimal saldoInicial) {
-		this.saldoInicial = saldoInicial;
+	public void setHolderpassword(String holderpassword) {
+		this.holderpassword = holderpassword;
+	}
+
+	public BigDecimal getInitialBalance() {
+		return initialBalance;
+	}
+
+	public void setInitialBalance(BigDecimal initialBalance) {
+		this.initialBalance = initialBalance;
 	}
 
 	public void setAuthorities(Set<Authority> authorities) {
