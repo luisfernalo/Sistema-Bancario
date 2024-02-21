@@ -1,4 +1,4 @@
-package com.softwared.banco.service;
+package com.softwared.banco.service.impl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,12 +17,13 @@ import com.softwared.banco.modelo.LoginRequest;
 import com.softwared.banco.modelo.RegisterRequest;
 import com.softwared.banco.repository.AuthorityRepository;
 import com.softwared.banco.repository.CuentaRepository;
+import com.softwared.banco.service.ICuentaService;
 import com.softwared.banco.util.enums.AuthorityName;
 import com.softwared.banco.util.excepciones.SistemaBancarioExcepcion;
 import com.softwared.banco.util.excepciones.SistemaBancarioExcepcionDetails;
 
 @Service
-public class CuentaService {
+public class CuentaServiceImpl implements ICuentaService{
 	@Autowired
 	private CuentaRepository cuentaRepository;
 
@@ -38,6 +39,7 @@ public class CuentaService {
 	@Autowired
 	JwtService jwtService;
 
+	@Override
 	public AuthResponse createCuenta(RegisterRequest request) throws SistemaBancarioExcepcion {
 
 		validarNumeroCuenta(request.getNumberAccount());
@@ -54,7 +56,7 @@ public class CuentaService {
 		return AuthResponse.builder().token(jwtToken).build();
 	}
 
-	public void validarNumeroCuenta(Long numeroCuenta) throws SistemaBancarioExcepcion {
+	private void validarNumeroCuenta(Long numeroCuenta) throws SistemaBancarioExcepcion {
 		if (numeroCuenta.toString().length() <= 4) {
 			throw new SistemaBancarioExcepcion("numero de cuenta corto",
 					new SistemaBancarioExcepcionDetails("Numero de cuenta debe ser mayor de 4 digitos", "error"));
@@ -66,6 +68,7 @@ public class CuentaService {
 		}
 	}
 
+	@Override
 	public AuthResponse loginUser(LoginRequest request) {
 
 		authenticationManager
