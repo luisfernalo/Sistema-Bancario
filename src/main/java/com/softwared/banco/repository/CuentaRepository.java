@@ -20,12 +20,12 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE CUENTA SET initial_balance=initial_balance+:valorDeposito where ID_CUENTA=:IdCuenta", nativeQuery = true)
-	void addFounds(@Param("IdCuenta") Integer idCuenta, @Param("valorDeposito") BigDecimal valorDeposito);
-
+	@Query(value = "UPDATE CUENTA SET initial_balance=:modifyBalance where ID_CUENTA=:IdCuenta", nativeQuery = true)
+	void modifyBalance(@Param("IdCuenta") Integer idCuenta, @Param("modifyBalance") BigDecimal modifyBalance);
+/*
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE CUENTA SET initial_balance=:valorRetiro where ID_CUENTA=:IdCuenta", nativeQuery = true)
 	void removeFounds(@Param("IdCuenta") Integer idCuenta, @Param("valorRetiro") BigDecimal valorRetiro);
-
+*/
 }

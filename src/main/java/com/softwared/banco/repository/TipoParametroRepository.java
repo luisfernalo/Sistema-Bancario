@@ -9,4 +9,5 @@ public interface TipoParametroRepository extends JpaRepository<Parametro, Intege
 	Parametro findBykeyParameter(String clave);
 	
 	Parametro findByValueParameter(String valor);
+	
 }

@@ -14,7 +14,6 @@ public class LocaleResolverConfig {
 	@Bean
 	public LocaleResolver LocaleResolver() {
 		SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-		//sessionLocaleResolver.setDefaultLocale(new Locale("es","CO"));
 		sessionLocaleResolver.setDefaultLocale(Locale.US);
 		return sessionLocaleResolver;
 	}
