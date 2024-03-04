@@ -1,6 +1,6 @@
 package com.softwared.banco.util.enums;
 
-public enum TipoTransacion {
+public enum TransactionTypeEnum {
 
 	DEPOSITO, RETIRO;
 
