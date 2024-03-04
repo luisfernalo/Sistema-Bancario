@@ -1,5 +1,5 @@
 package com.softwared.banco.util.enums;
 
-public enum AuthorityName {
+public enum AuthorityNameEnum {
 	READ, WRITE, ADMIN, USER
 }

@@ -3,8 +3,8 @@ package com.softwared.banco.modelo;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.softwared.banco.util.enums.EstadoTransacion;
-import com.softwared.banco.util.enums.TipoTransacion;
+import com.softwared.banco.util.enums.TransactionStatusEnum;
+import com.softwared.banco.util.enums.TransactionTypeEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,8 +18,8 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "Transaccion")
-public class Transaccion {
+@Table(name = "Transaction")
+public class Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idTransaction;
@@ -29,20 +29,20 @@ public class Transaccion {
 
 	@Column
 	@Enumerated(EnumType.STRING)
-	private TipoTransacion typeTransaction;
+	private TransactionTypeEnum typeTransaction;
 	@Column
 	private BigDecimal valueTransaction;
 	private LocalDateTime dateTransaction;
 	@Column
 	@Enumerated(EnumType.STRING)
-	private EstadoTransacion stateTransaction;
+	private TransactionStatusEnum stateTransaction;
 
-	public Transaccion() {
+	public Transaction() {
 		super();
 	}
 
-	public Transaccion(Long numberAccount, BigDecimal valueTransaction, TipoTransacion typeTransaction, LocalDateTime localDateTime,
-			EstadoTransacion stateTransaction) {
+	public Transaction(Long numberAccount, BigDecimal valueTransaction, TransactionTypeEnum typeTransaction, LocalDateTime localDateTime,
+			TransactionStatusEnum stateTransaction) {
 		super();
 
 		this.numberAccount = numberAccount;
@@ -68,11 +68,11 @@ public class Transaccion {
 		this.numberAccount = numberAccount;
 	}
 
-	public TipoTransacion getTypeTransaction() {
+	public TransactionTypeEnum getTypeTransaction() {
 		return typeTransaction;
 	}
 
-	public void setTypeTransaction(TipoTransacion typeTransaction) {
+	public void setTypeTransaction(TransactionTypeEnum typeTransaction) {
 		this.typeTransaction = typeTransaction;
 	}
 
@@ -92,11 +92,11 @@ public class Transaccion {
 		this.dateTransaction = dateTransaction;
 	}
 
-	public EstadoTransacion getStateTransaction() {
+	public TransactionStatusEnum getStateTransaction() {
 		return stateTransaction;
 	}
 
-	public void setStateTransaction(EstadoTransacion stateTransaction) {
+	public void setStateTransaction(TransactionStatusEnum stateTransaction) {
 		this.stateTransaction = stateTransaction;
 	}
 

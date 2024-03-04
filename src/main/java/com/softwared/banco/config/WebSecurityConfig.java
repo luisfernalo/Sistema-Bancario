@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.softwared.banco.jwt.JwtAuthenticationFilter;
-import com.softwared.banco.util.enums.AuthorityName;
+import com.softwared.banco.util.enums.AuthorityNameEnum;
 
 @Configuration
 @EnableWebSecurity
@@ -37,7 +37,7 @@ public class WebSecurityConfig {
 		httpSecurity.csrf(csrf-> csrf.disable())
 					.authorizeHttpRequests(auth->{ 
 							auth.requestMatchers("/api/auth/login").permitAll();
-							auth.requestMatchers("/api/auth/register").hasAuthority(AuthorityName.ADMIN.toString());
+							auth.requestMatchers("/api/auth/register").hasAuthority(AuthorityNameEnum.ADMIN.toString());
 							auth.anyRequest().authenticated();
 							})
 					.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

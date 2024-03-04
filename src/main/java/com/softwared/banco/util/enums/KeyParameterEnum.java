@@ -1,15 +1,15 @@
 package com.softwared.banco.util.enums;
 
-public enum ClaveParametro {
+public enum KeyParameterEnum {
 	VALOR_MIN_TR("VALOR_MINIMO_TRANSACCION");
 	
 	private String clave;
 
-	private ClaveParametro(String clave) {
+	private KeyParameterEnum(String clave) {
 		this.clave = clave;
 	}
 
-	public String getClaveParametro() {
+	public String getkeyParameterEnum() {
 		return this.clave;
 	}
 

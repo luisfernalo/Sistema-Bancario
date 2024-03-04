@@ -3,7 +3,7 @@ package com.softwared.banco.modelo;
 
 
 
-import com.softwared.banco.util.enums.TipoParametro;
+import com.softwared.banco.util.enums.TypeParameterEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,8 +16,8 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "parametros")
-public class Parametro {
+@Table(name = "parameter")
+public class Parameter {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,18 +27,18 @@ public class Parametro {
 	private String keyParameter;
 	@Column
 	@Enumerated(EnumType.STRING)
-	private TipoParametro typeParameter;
+	private TypeParameterEnum typeParameter;
 	@Column
 	private String valueParameter;
 
 	
 	
-	public Parametro() {
+	public Parameter() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Parametro(String keyParameter, TipoParametro typeParameter, String valueParameter) {
+	public Parameter(String keyParameter, TypeParameterEnum typeParameter, String valueParameter) {
 		super();
 		this.keyParameter = keyParameter;
 		this.typeParameter = typeParameter;
@@ -61,11 +61,11 @@ public class Parametro {
 		this.keyParameter = keyParameter;
 	}
 
-	public TipoParametro getTypeParameter() {
+	public TypeParameterEnum getTypeParameter() {
 		return typeParameter;
 	}
 
-	public void setTypeParameter(TipoParametro typeParameter) {
+	public void setTypeParameter(TypeParameterEnum typeParameter) {
 		this.typeParameter = typeParameter;
 	}
 
@@ -85,11 +85,11 @@ public class Parametro {
 		this.keyParameter = clave;
 	}
 
-	public TipoParametro getTipoParametro() {
+	public TypeParameterEnum getTipoParametro() {
 		return typeParameter;
 	}
 
-	public void setTipoParametro(TipoParametro tipoParametro) {
+	public void setTipoParametro(TypeParameterEnum tipoParametro) {
 		this.typeParameter = tipoParametro;
 	}
 

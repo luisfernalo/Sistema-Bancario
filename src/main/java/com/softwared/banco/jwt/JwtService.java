@@ -21,10 +21,10 @@ public class JwtService {
 	private static final String SECRET_KEY = "DBC0F108FC15E418A45D8BBEB3D67981A1F8E0346C357D7B9B566C90E044E493";
 
 	public String generateToken(UserDetails userDetails) {
-		return generateToken(new HashMap<>(), userDetails);
+		return generatenToken(new HashMap<>(), userDetails);
 	}
 
-	public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+	public String generatenToken(Map<String, Object> extraClaims, UserDetails userDetails) {
 		return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))

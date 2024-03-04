@@ -1,11 +1,12 @@
-package com.softwared.banco.modelo;
+package com.softwared.banco.dto;
 
 import java.math.BigDecimal;
 
-public class RegisterRequest {
+public class RegisterRequestDto {
 
 	private Long numberAccount;
 	private String holderName;
+	private String holderLastName;
 	private String holderEmail;
 	private String holderpassword;
 	private BigDecimal initialBalance;
@@ -33,6 +34,15 @@ public class RegisterRequest {
 	public void setHolderName(String holderName) {
 		this.holderName = holderName;
 	}
+	
+
+	public String getHolderLastName() {
+		return holderLastName;
+	}
+
+	public void setHolderLastName(String holderLastName) {
+		this.holderLastName = holderLastName;
+	}
 
 	public String getHolderpassword() {
 		return holderpassword;
@@ -50,17 +60,18 @@ public class RegisterRequest {
 		this.initialBalance = initialBalance;
 	}
 
-	public RegisterRequest(Long numberAccount, String holderName, String holderEmail, String holderpassword,
+	public RegisterRequestDto(Long numberAccount, String holderName, String holderLastName,String holderEmail, String holderpassword,
 			BigDecimal initialBalance) {
 		super();
 		this.numberAccount = numberAccount;
 		this.holderEmail = holderEmail;
 		this.holderName = holderName;
+		this.holderLastName= holderLastName;
 		this.holderpassword = holderpassword;
 		this.initialBalance = initialBalance;
 	}
 
-	public RegisterRequest() {
+	public RegisterRequestDto() {
 		super();
 	}
 
@@ -68,6 +79,7 @@ public class RegisterRequest {
 
 		private Long numberAccount;
 		private String holderName;
+		private String holderLastName;
 		private String holderpassword;
 		private String holderEmail;
 		private BigDecimal initialBalance;
@@ -79,6 +91,10 @@ public class RegisterRequest {
 
 		public Builder withHolderName(String holderName) {
 			this.holderName = holderName;
+			return this;
+		}
+		public Builder withHolderLastName(String holderLastName) {
+			this.holderLastName=holderLastName;
 			return this;
 		}
 
@@ -97,8 +113,8 @@ public class RegisterRequest {
 			return this;
 		}
 
-		public RegisterRequest build() {
-			return new RegisterRequest(numberAccount, holderName, holderEmail, holderpassword, initialBalance);
+		public RegisterRequestDto build() {
+			return new RegisterRequestDto(numberAccount, holderName, holderLastName,holderEmail, holderpassword, initialBalance);
 		}
 	}
 }

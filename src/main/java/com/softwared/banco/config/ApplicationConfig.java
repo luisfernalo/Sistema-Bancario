@@ -11,16 +11,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.softwared.banco.repository.CuentaRepository;
+import com.softwared.banco.repository.PersonRepository;
 
 @Configuration
 public class ApplicationConfig {
 
-	private final CuentaRepository cuentaRepository;
+	private final PersonRepository personRepository;
 
-    @Bean
-    UserDetailsService userDetailsService() {
-		return username -> cuentaRepository.findByHolderEmail(username)
+	@Bean
+	UserDetailsService userDetailsService() {
+		return username -> personRepository.findByHolderEmail(username)
 				.orElseThrow(() -> new UsernameNotFoundException("usuario no encontrado"));
 	}
 
@@ -42,10 +42,9 @@ public class ApplicationConfig {
 		return config.getAuthenticationManager();
 	}
 
-	public ApplicationConfig(CuentaRepository cuentaRepository) {
+	public ApplicationConfig(PersonRepository personRepository) {
 		super();
-		this.cuentaRepository = cuentaRepository;
+		this.personRepository = personRepository;
 	}
 
-	
 }

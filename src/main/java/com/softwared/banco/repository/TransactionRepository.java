@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.softwared.banco.modelo.Transaccion;
+import com.softwared.banco.modelo.Transaction;
 
 @Repository
-public interface TransaccionRepository extends JpaRepository<Transaccion, Integer> {
+public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
 
-	List<Transaccion> findByNumberAccount(Long numeroCuenta);
+	List<Transaction> findByNumberAccount(Long numeroCuenta);
 
 }

@@ -1,16 +1,16 @@
-package com.softwared.banco.modelo;
+package com.softwared.banco.dto;
 
 public class LoginRequest {
 
-	private String username;
+	private String email;
 	private String password;
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String username) {
+		this.email = username;
 	}
 
 	public String getPassword() {
@@ -21,9 +21,9 @@ public class LoginRequest {
 		this.password = password;
 	}
 
-	public LoginRequest(String username, String password) {
+	public LoginRequest(String email, String password) {
 		super();
-		this.username = username;
+		this.email = email;
 		this.password = password;
 	}
 	
@@ -38,11 +38,11 @@ public class LoginRequest {
 
 	public static class Builder {
 
-		private String username;
+		private String email;
 		private String password;
 
-		public Builder withUsername(String username) {
-			this.username = username;
+		public Builder withEmail(String email) {
+			this.email = email;
 			return this;
 		}
 
@@ -53,13 +53,13 @@ public class LoginRequest {
 
 		public LoginRequest build() {
 			
-			if (username == null || username.isEmpty()) {
+			if (email == null || email.isEmpty()) {
 				throw new IllegalArgumentException("Username cannot be null or empty");
 			}
 			if (password == null || password.isEmpty()) {
 				throw new IllegalArgumentException("Password cannot be null or empty");
 			}
-			return new LoginRequest(username, password);
+			return new LoginRequest(email, password);
 		}
 	}
 

@@ -1,6 +1,6 @@
 package com.softwared.banco.util.enums;
 
-public enum EstadoTransacion {
+public enum TransactionStatusEnum {
 
 	APROBADO, RECHAZADO;
 
